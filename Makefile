@@ -1,16 +1,17 @@
-.PHONY: build get
+.PHONY: build get deb
 
 VERSION ?= 2.3.6
 LOCAL_IMAGE ?= unixodbc
 ARCH = amd64
 DEB = unixODBC_$(VERSION)_$(ARCH).deb
 
-default: build
+default: help
 
 build: ## build the package
 	docker build . --tag $(LOCAL_IMAGE) --build-arg VERSION=$(VERSION)
 
 # unixODBC_$(VERSION)_$(ARCH).deb: build
+deb: build
 deb: ## build and download the package
 	docker run --rm -d --name unixodbc-tmp $(LOCAL_IMAGE) bash
 	docker cp unixodbc-tmp:/opt/unixodbc/unixODBC-$(VERSION)/$(DEB) .
