@@ -1,10 +1,11 @@
-FROM ubuntu:12.04
+FROM ubuntu:xenial
 
 USER root
 
 RUN apt-get update -y \
+  && apt-get install -y software-properties-common \
+  && add-apt-repository -y ppa:brightbox/ruby-ng \
   && apt-get install -y python-software-properties \
-  && apt-add-repository -y ppa:brightbox/ruby-ng \
   && apt-get update -y \
   && apt-get install -y ruby2.3 ruby2.3-dev build-essential curl \
   && gem install --no-ri --no-rdoc fpm \
